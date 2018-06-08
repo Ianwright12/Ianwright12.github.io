@@ -1,0 +1,85 @@
+<html>
+	<head>
+	<title> Pong </title>
+		<script src="https://simplycodingcourses.com/files/simply.js"></script>
+		<script>
+
+			function start(){
+			sjs.open("target",800,700);
+			//Ball Object and Properties
+			var ball = new sjs.Image("Images/spike.png");
+			ball.type = "ball"; 
+
+			//Ball
+			ball.setSize(50,50); 
+			ball.friction = 0; 
+			ball.bounce();
+			ball.center();
+			ball.pushRight(3);
+			ball.pushUp(4);
+			ball.setSize(100,100);
+			ball.friction = 0;
+			ball.pushRight(3);
+			ball.pushUp(4);
+			ball.bounce(1);
+			//paddle 1
+			var paddle1 = new sjs.Image("Images/paddle.png");
+				paddle1.type = "paddle";
+				paddle1.centerH();
+				paddle1.setSize(200,20);
+					//paddle 2
+			var paddle2 = new sjs.Image("Images/paddle2.png");
+				paddle2.type = "paddle";
+				paddle2.center().bottom(); 
+				paddle2.setSize(200,20);
+
+				sjs.keyDown(LEFT_KEY, function(){
+					paddle1.pushLeft();
+			}); 
+
+			sjs.keyDown(RIGHT_KEY, function(){
+				paddle1.pushRight();
+			});
+
+				sjs.keyDown(A_KEY, function(){
+					paddle2.pushLeft();
+			}); 
+
+			sjs.keyDown(D_KEY, function(){
+				paddle2.pushRight();
+			});
+					
+
+			sjs.onHit("ball","paddle", function(ball,paddle){
+				score = score + 1;
+				score_txt.setText("Score: "+score);
+				sjs.bounceOff(ball,paddle); 
+			});
+/*
+			sjs.onHit("ball",["top_screen","bottom_screen"], function(){
+				window.location = "gameover.html"; 
+			});
+*/			
+			sjs.onHit("ball", "top_screen", function(ball,Myscreen) {
+				window.location = "player1lost.html"; 
+			});
+			sjs.onHit("ball", "bottom_screen", function(ball,Myscreen) {
+				window.location = "player2lost.html"; 
+			});
+
+			//Score
+			var score = 0;
+			var score_txt = new sjs.Text("Score for both: 0", 21, "green");
+
+
+
+} //end start
+	</script>
+</head>
+<body onload="start()">
+	<h1> Ian's game  </h1>
+
+	<div id="target" style="margin:auto;background:#FFFAF0;"></div>
+	</div>
+	</body>
+</html>
